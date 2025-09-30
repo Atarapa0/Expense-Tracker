@@ -6,7 +6,7 @@ class TransactionProvider with ChangeNotifier {
   int _idCounter = 1;
   double totalIncome = 0;
   double totalExpense = 0;
-  double totalBalance=0;
+  double totalBalance = 0;
   void addTransaction(
     String title,
     double amount,
@@ -23,29 +23,24 @@ class TransactionProvider with ChangeNotifier {
         type: type,
         category: category,
       );
-      if (items.type == TransactionType.income) {
-        totalBalance+=items.amount;
-        _items.add(items);
-        notifyListeners();
-        if(items.category==Category.salary || items.category==Category.freelancer){
-          totalIncome += items.amount;
-          _items.add(items);
-          notifyListeners();
-        }
-      } else if (items.type == TransactionType.expense) {
-        totalExpense += items.amount;
-        totalBalance-=items.amount;
-        _items.add(items);
-        notifyListeners();
-      } else {
-        ScaffoldMessenger(child: ScaffoldMessenger(child: Text("Error")));
-
-      }
+      _items.add(items);
+      notifyListeners();
     } else {
-      ScaffoldMessenger(child: ScaffoldMessenger(child: Text("Error")));
+      return;
     }
   }
 
+  double get income {
+    return _items
+        .where((tx) => tx.type == TransactionType.income)
+        .fold(0, (sum, tx) => sum + tx.amount);
+  }
 
+  double get expense {
+    return _items
+        .where((tx) => tx.type == TransactionType.expense)
+        .fold(0, (sum, tx) => sum + tx.amount);
+  }
 
+  double get balance => income - expense;
 }
