@@ -12,7 +12,25 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text("Expense Tracker")),
+      body: Positioned(
+        left: 30,
+        right: 30,
+        top: 30,
+        bottom: 30,
+        child: Column(
+          children: [
+            Text("MEvcut bakiye:"),
+            SizedBox(height: 10),
+            Text("₺ 25000"),
+            Row(
+              children: [
+                Icon(Icons.add),
 
+              ],
+            )
+          ],
+        ),
+      ),
     );
   }
 }

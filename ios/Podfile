@@ -1,0 +1,7 @@
+platform :ios, '13.0'
+
+target 'Runner' do
+  use_frameworks!
+  use_modular_headers!
+  # Pod eklentilerin yoksa (şu an yok) ekstra bir şey yazmana gerek yok.
+end

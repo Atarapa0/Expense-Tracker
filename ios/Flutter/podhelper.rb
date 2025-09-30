@@ -1,0 +1,16 @@
+# CocoaPods helper functions for Flutter apps
+
+def flutter_root
+  generated_xcode_build_settings_path = File.expand_path('Generated.xcconfig', __dir__)
+  unless File.exist?(generated_xcode_build_settings_path)
+    raise "#{generated_xcode_build_settings_path} must exist. If you're running pod install manually, make sure flutter pub get is executed first"
+  end
+
+  File.foreach(generated_xcode_build_settings_path) do |line|
+    matches = line.match(/FLUTTER_ROOT=(.*)/)
+    return matches[1].strip if matches
+  end
+  raise "FLUTTER_ROOT not found in Generated.xcconfig. Try running flutter pub get again."
+end
+
+require File.expand_path('bin/podhelper', File.join(flutter_root, 'packages', 'flutter_tools'))
