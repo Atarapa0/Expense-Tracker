@@ -3,10 +3,8 @@ import 'package:flutter/material.dart';
 
 class TransactionProvider with ChangeNotifier {
   final List<TransactionModel> _items = [];
+  List<TransactionModel> get items => List.unmodifiable(_items);
   int _idCounter = 1;
-  double totalIncome = 0;
-  double totalExpense = 0;
-  double totalBalance = 0;
   void addTransaction(
     String title,
     double amount,
@@ -15,7 +13,7 @@ class TransactionProvider with ChangeNotifier {
     Category category,
   ) {
     if (amount > 0) {
-      var items = TransactionModel(
+      var tx = TransactionModel(
         id: _idCounter++,
         title: title,
         amount: amount,
@@ -23,7 +21,8 @@ class TransactionProvider with ChangeNotifier {
         type: type,
         category: category,
       );
-      _items.add(items);
+      _items.add(tx);
+      _items.sort((a, b) => b.dateTime.compareTo(a.dateTime));
       notifyListeners();
     } else {
       return;

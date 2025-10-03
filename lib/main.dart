@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-
+import 'package:provider/provider.dart';
+import 'providers/transaction_provider.dart';
 import 'pages/home_page.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(ChangeNotifierProvider(create: (_) => TransactionProvider(), child: MyApp()));
+
 }
 
 class MyApp extends StatelessWidget {
