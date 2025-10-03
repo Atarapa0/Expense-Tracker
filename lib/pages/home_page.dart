@@ -1,4 +1,3 @@
-import 'package:expense_tracker/models/transaction_model.dart';
 import 'package:expense_tracker/pages/add_transaction_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -103,45 +102,68 @@ class _HomePageState extends State<HomePage> {
             SizedBox(height: 0),
             Container(
               margin: EdgeInsets.only(left: 25, right: 25),
+              width: double.infinity,
               padding: EdgeInsets.all(20),
               decoration: BoxDecoration(
-                color: Colors.green.withAlpha(250),
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text("Recent Transactions"),
-                  Consumer<TransactionProvider>(
-                    builder: (context, provider, __) {
-                      var entries = provider.items;
-                      if (entries.isEmpty) {
-                        return Center(child: Text("No transactions yet"));
-                      }
-                      return GridView.builder(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          mainAxisSpacing: 10,
-                          crossAxisSpacing: 10,
-                          childAspectRatio: 4 / 5,
-                        ),
-                        itemCount: entries.length,
-                        itemBuilder: (context, index) {
-                          final item = entries[index];
-                          return Card(
-                            child: Column(
-                              children: [
-                                Text(item.title),
-                                Text("₺ ${item.amount}"),
-                                Text(item.type.toString()),
-                              ],
-                            ),
-                          );
-                        },
-                      );
-                    },
+                  const SizedBox(height: 10),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height,
+                    child: Consumer<TransactionProvider>(
+                      builder: (context, provider, __) {
+                        var entries = provider.items;
+                        if (entries.isEmpty) {
+                          return Center(child: Text("No transactions yet"));
+                        }
+                        return ListView.builder(
+                          itemCount: entries.length,
+                          itemBuilder: (context, index) {
+                            final item = entries[index];
+                            return Container(
+                              margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 12), // Kart araları
+                              child: Card(
+                                color: Colors.pink,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(12.0),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Text("Icon"),
+                                          const SizedBox(width: 8),
+                                          Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Text(item.title),
+                                              Text(item.category.toString().split('.').last),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                      Column(
+                                        crossAxisAlignment: CrossAxisAlignment.end,
+                                        children: [
+                                          Text(item.amount.toString()),
+                                          Text("${item.dateTime.day}/${item.dateTime.month}/${item.dateTime.year}"),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        );
+
+
+                      },
+                    ),
                   ),
                 ],
               ),

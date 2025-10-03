@@ -1,5 +1,8 @@
+import 'package:expense_tracker/models/transaction_model.dart';
+import 'package:expense_tracker/providers/transaction_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 class AddTransactionPage extends StatefulWidget {
   const AddTransactionPage({super.key});
@@ -55,6 +58,46 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
     _commentController.dispose();
     super.dispose();
   }
+  TransactionType parseType(String value) {
+    return TransactionType.values.firstWhere(
+          (e) => e.toString().split('.').last == value,
+    );
+  }
+
+  Category parseCategory(String value) {
+    return Category.values.firstWhere(
+          (e) => e.toString().split('.').last == value,
+    );
+  }
+
+
+  void addTransactions(BuildContext context){
+    final title=_commentController.text.trim();
+    final amount =double.tryParse(_amountController.text.trim());
+    final date = _selectedDate;
+    final types =_selectedType;
+    final category =_selectedCategory;
+    if(title.isNotEmpty &&
+        amount != null &&
+        amount > 0 &&
+        date != null &&
+        types != null &&
+        category != null){
+      final counter = context.read<TransactionProvider>();
+      counter.addTransaction(title, amount, date, parseType(types), parseCategory(category));
+      print("Save");
+      Navigator.of(context).pop();
+      _commentController.clear();
+      _commentController.clear();
+
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('$type Add')));
+
+    }
+
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +123,6 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
             SizedBox(height: 16),
             TextField(
               controller: _commentController,
-              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: 'Comment',
@@ -139,7 +181,7 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: () => {},
+                onPressed: () => addTransactions(context),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.green,
                   foregroundColor: Colors.white,
