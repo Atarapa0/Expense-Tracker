@@ -116,7 +116,6 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
             SizedBox(height: 20),
             TextField(
               controller: _amountController,
-                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               keyboardType: const TextInputType.numberWithOptions(decimal: true),
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
