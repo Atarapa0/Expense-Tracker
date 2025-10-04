@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../models/transaction_model.dart';
 import '../pages/add_transaction_page.dart';
 
 Container balanceCard(double balance, double income, double expense, BuildContext context) {
@@ -61,7 +62,7 @@ Container balanceCard(double balance, double income, double expense, BuildContex
               onPressed: () => Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const AddTransactionPage(),
+                  builder: (context) =>  AddTransactionPage(presetType: TransactionType.income),
                 ),
               ),
               child: const Text('Income Add'),
@@ -71,7 +72,7 @@ Container balanceCard(double balance, double income, double expense, BuildContex
               onPressed: () => Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const AddTransactionPage(),
+                  builder: (context) =>  AddTransactionPage(presetType: TransactionType.expense),
                 ),
               ),
               child: const Text('Expense Add'),

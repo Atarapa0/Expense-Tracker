@@ -5,7 +5,8 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class AddTransactionPage extends StatefulWidget {
-  const AddTransactionPage({super.key});
+  final TransactionType presetType;
+  const AddTransactionPage({super.key, required this.presetType});
 
   @override
   State<AddTransactionPage> createState() => _AddTransactionPageState();
@@ -17,6 +18,7 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
   DateTime? _selectedDate;
   String? _selectedCategory;
   String? _selectedType;
+
 
   final List<String> categories = [
     "salary",
@@ -50,6 +52,7 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
     super.initState();
     _amountController = TextEditingController();
     _commentController = TextEditingController();
+    _selectedType = widget.presetType.name;
   }
 
   @override
@@ -85,14 +88,13 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
         category != null){
       final counter = context.read<TransactionProvider>();
       counter.addTransaction(title, amount, date, parseType(types), parseCategory(category));
-      print("Save");
       Navigator.of(context).pop();
-      _commentController.clear();
+      _amountController.clear();
       _commentController.clear();
 
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(SnackBar(content: Text('$type Add')));
+      ).showSnackBar(SnackBar(content: Text('$_selectedType Add')));
 
     }
 
@@ -114,7 +116,8 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
             SizedBox(height: 20),
             TextField(
               controller: _amountController,
-              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+              keyboardType: const TextInputType.numberWithOptions(decimal: true),
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: '₺ Amount',
@@ -147,6 +150,7 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
             ),
             SizedBox(height: 16),
             DropdownButtonFormField<String>(
+
               value: _selectedType,
               decoration: InputDecoration(
                 border: OutlineInputBorder(),

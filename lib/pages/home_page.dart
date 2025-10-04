@@ -43,26 +43,22 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   Text("Recent Transactions", style: TextStyle(fontSize: 20)),
                   const SizedBox(height: 10),
-                  SizedBox(
-                    height: MediaQuery
-                        .of(context)
-                        .size
-                        .height,
-                    child: Consumer<TransactionProvider>(
-                      builder: (context, provider, __) {
-                        var entries = provider.items;
-                        if (entries.isEmpty) {
-                          return Center(child: Text("No transactions yet"));
-                        }
-                        return ListView.builder(
-                          itemCount: entries.length,
-                          itemBuilder: (context, index) {
-                            final item = entries[index];
-                            return transactionTile(item);
-                          },
-                        );
-                      },
-                    ),
+                  Consumer<TransactionProvider>(
+                    builder: (context, provider, __) {
+                      var entries = provider.items;
+                      if (entries.isEmpty) {
+                        return Center(child: Text("No transactions yet"));
+                      }
+                      return ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: entries.length,
+                        itemBuilder: (context, index) {
+                          final item = entries[index];
+                          return transactionTile(item);
+                        },
+                      );
+                    },
                   ),
                 ],
               ),
