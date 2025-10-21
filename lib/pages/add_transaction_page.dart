@@ -1,7 +1,6 @@
 import 'package:expense_tracker/models/transaction_model.dart';
 import 'package:expense_tracker/providers/transaction_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class AddTransactionPage extends StatefulWidget {
@@ -150,7 +149,7 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
             SizedBox(height: 16),
             DropdownButtonFormField<String>(
 
-              value: _selectedType,
+              
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: "Type",
@@ -166,7 +165,7 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
             ),
             SizedBox(height: 16),
             DropdownButtonFormField<String>(
-              value: _selectedCategory,
+             
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: "Categories",

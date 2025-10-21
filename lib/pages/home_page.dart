@@ -9,6 +9,7 @@ class HomePage extends StatefulWidget {
 
   @override
   State<HomePage> createState() => _HomePageState();
+  
 }
 
 class _HomePageState extends State<HomePage> {
@@ -19,6 +20,7 @@ class _HomePageState extends State<HomePage> {
     final balance = context.select<TransactionProvider, double>((p) => p.balance);
     final income  = context.select<TransactionProvider, double>((p) => p.income);
     final expense = context.select<TransactionProvider, double>((p) => p.expense);
+    
     return Scaffold(
       appBar: AppBar(title: Text("Expense Tracker")),
       body: SingleChildScrollView(

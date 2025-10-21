@@ -1,5 +1,7 @@
+import 'dart:convert';
 import 'package:expense_tracker/models/transaction_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class TransactionProvider with ChangeNotifier {
   final List<TransactionModel> _items = [];
@@ -42,4 +44,17 @@ class TransactionProvider with ChangeNotifier {
   }
 
   double get balance => income - expense;
+
+  Future<void> loadTransactions() async {
+  // Placeholder for loading transactions from persistent storage
+  final String jsonString = await rootBundle.loadString('assets/data/transactions.json');
+  final List<dynamic> jsonData = json.decode(jsonString);
+  _items.clear();
+  for (var item in jsonData) {
+    _items.add(TransactionModel.fromJson(item));
+  }
+  notifyListeners();
 }
+
+}
+

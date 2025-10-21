@@ -22,6 +22,18 @@ class TransactionModel {
   }
   @override
   int get hashCode => id.hashCode;
+
+  
+    factory TransactionModel.fromJson(Map<String, dynamic> json) {
+    return TransactionModel(
+      id: json['id'],
+      title: json['title'],
+      amount: json['amount'].toDouble(),
+      dateTime: DateTime.parse(json['dateTime']),
+      type: TransactionType.values.byName(json['type']),
+      category: Category.values.byName(json['category']),
+    );
+  }
 }
 
 enum TransactionType { income, expense }
