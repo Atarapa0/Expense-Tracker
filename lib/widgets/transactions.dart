@@ -31,7 +31,7 @@ Container transactions() {
                           itemCount: entries.length,
                           itemBuilder: (context, index) {
                             final item = entries[index];
-                            return transactionTile(item);
+                            return transactionTile(item, context);
                           },
                         );
                       },

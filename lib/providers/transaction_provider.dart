@@ -68,6 +68,17 @@ _items
    
   _items.sort((a, b) => b.dateTime.compareTo(a.dateTime));
 }
+Future<void> deleteTransaction(int id) async{
+  final box = Hive.box<TransactionModel>('transactions');
+
+  // 1) Listeden sil
+  _items.removeWhere((tx) => tx.id == id);
+
+  // 2) Hive'den sil
+  await box.delete(id);
+
+  notifyListeners();
+}
 }
 
 
