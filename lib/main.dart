@@ -1,11 +1,31 @@
+import 'package:expense_tracker/models/transaction_model.dart';
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 import 'providers/transaction_provider.dart';
 import 'pages/home_page.dart';
 
-void main() {
-  runApp(ChangeNotifierProvider(create: (_) => TransactionProvider(), child: MyApp()));
+Future<void> main() async {
+WidgetsFlutterBinding.ensureInitialized();
 
+  // 1) Hive'i başlat
+  await Hive.initFlutter();
+
+  // 2) Adapter'ları kaydet
+  Hive.registerAdapter(TransactionModelAdapter());
+  Hive.registerAdapter(TransactionTypeAdapter());
+  Hive.registerAdapter(CategoryAdapter());
+
+  // 3) Box aç
+  final box = await Hive.openBox<TransactionModel>('transactions');
+
+  // 4) Provider'a box verip app'i başlat
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => TransactionProvider(box),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {

@@ -22,7 +22,7 @@ class _HomePageState extends State<HomePage> {
   }
   void refreshUI() {
     setState(() {
-      context.read<TransactionProvider>().loadTransactions();
+      _initialFuture = context.read<TransactionProvider>().loadTransactions();
     });
   }
 
