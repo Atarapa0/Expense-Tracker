@@ -56,10 +56,10 @@ class TransactionModel {
 @HiveType(typeId: 1)
 enum TransactionType {
   @HiveField(0)
-  income,
+  Income,
   
   @HiveField(1)
-  expense,
+  Expense,
 }
 
 @HiveType(typeId: 2)

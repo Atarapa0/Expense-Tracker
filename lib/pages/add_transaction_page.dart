@@ -93,6 +93,7 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
         parseType(types),
         parseCategory(category),
       );
+
       Navigator.of(context).pop();
       _amountController.clear();
       _commentController.clear();
@@ -100,13 +101,31 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(SnackBar(content: Text('$_selectedType Add')));
+    } else {
+      String message = "";
+
+      if (title.isEmpty) {
+        message = "Please enter a Comment";
+      } else if (amount == null || amount <= 0) {
+        message = "Please enter a valid Amount";
+      } else if (date == null) {
+        message = "Please select a Date";
+      } else if (category == null) {
+        message = "Please select a Category";
+      } else {
+        message = "Please fill all fields correctly";
+      }
+
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(message)));
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Add income / expense")),
+      appBar: AppBar(title: Text("Add ${_selectedType ?? ''} Transaction")),
       body: Container(
         padding: EdgeInsets.all(20),
         width: MediaQuery.of(context).size.width,
@@ -135,7 +154,7 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: 'Comment',
-              ), 
+              ),
             ),
             SizedBox(height: 16),
             TextField(
@@ -155,7 +174,7 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
               ),
             ),
             SizedBox(height: 16),
-            DropdownButtonFormField<String>(
+            /*DropdownButtonFormField<String>(
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: "Type",
@@ -169,7 +188,7 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
                 });
               },
             ),
-            SizedBox(height: 16),
+            SizedBox(height: 16),*/
             DropdownButtonFormField<String>(
               decoration: InputDecoration(
                 border: OutlineInputBorder(),

@@ -45,7 +45,7 @@ Container balanceCard(double balance, double income, double expense, BuildContex
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("expense",style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold),),
+                    Text("Expense",style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold),),
                     SizedBox(height: 5),
                     Text("₺ $expense",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold,color: Colors.red),),
                   ],
@@ -62,7 +62,7 @@ Container balanceCard(double balance, double income, double expense, BuildContex
               onPressed: () => Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) =>  AddTransactionPage(presetType: TransactionType.income),
+                  builder: (context) =>  AddTransactionPage(presetType: TransactionType.Income),
                 ),
               ),
               child: const Text('Income Add'),
@@ -72,7 +72,7 @@ Container balanceCard(double balance, double income, double expense, BuildContex
               onPressed: () => Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) =>  AddTransactionPage(presetType: TransactionType.expense),
+                  builder: (context) =>  AddTransactionPage(presetType: TransactionType.Expense),
                 ),
               ),
               child: const Text('Expense Add'),

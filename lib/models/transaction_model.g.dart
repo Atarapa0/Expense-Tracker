@@ -63,21 +63,21 @@ class TransactionTypeAdapter extends TypeAdapter<TransactionType> {
   TransactionType read(BinaryReader reader) {
     switch (reader.readByte()) {
       case 0:
-        return TransactionType.income;
+        return TransactionType.Income;
       case 1:
-        return TransactionType.expense;
+        return TransactionType.Expense;
       default:
-        return TransactionType.income;
+        return TransactionType.Income;
     }
   }
 
   @override
   void write(BinaryWriter writer, TransactionType obj) {
     switch (obj) {
-      case TransactionType.income:
+      case TransactionType.Income:
         writer.writeByte(0);
         break;
-      case TransactionType.expense:
+      case TransactionType.Expense:
         writer.writeByte(1);
         break;
     }

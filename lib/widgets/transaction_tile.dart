@@ -67,7 +67,7 @@ Container transactionTile(TransactionModel item, BuildContext context) {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  if (item.type == TransactionType.income)
+                  if (item.type == TransactionType.Income)
                     Text(
                       "+ ₺ ${item.amount.toString()}",
                       style: TextStyle(
@@ -76,7 +76,7 @@ Container transactionTile(TransactionModel item, BuildContext context) {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                  if (item.type == TransactionType.expense)
+                  if (item.type == TransactionType.Expense)
                     Text(
                       "- ₺ ${item.amount.toString()}",
                       style: TextStyle(

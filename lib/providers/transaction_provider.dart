@@ -26,8 +26,8 @@ TransactionProvider(this.box) {
   Category category,
 ) async {
   if (amount <= 0) return;
+  
 
-  final box = Hive.box<TransactionModel>('transactions');
 
   final tx = TransactionModel(
     id: _idCounter++,
@@ -51,12 +51,12 @@ TransactionProvider(this.box) {
 }
   double get income {
     return _items
-        .where((tx) => tx.type == TransactionType.income)
+        .where((tx) => tx.type == TransactionType.Income)
         .fold(0, (sum, tx) => sum + tx.amount);
   }
   double get expense {
     return _items
-        .where((tx) => tx.type == TransactionType.expense)
+        .where((tx) => tx.type == TransactionType.Expense)
         .fold(0, (sum, tx) => sum + tx.amount);
   }
   double get balance => income - expense;
