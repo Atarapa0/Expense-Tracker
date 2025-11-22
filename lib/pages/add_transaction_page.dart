@@ -1,6 +1,7 @@
 import 'package:expense_tracker/models/transaction_model.dart';
 import 'package:expense_tracker/providers/transaction_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class AddTransactionPage extends StatefulWidget {
@@ -17,7 +18,6 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
   DateTime? _selectedDate;
   String? _selectedCategory;
   String? _selectedType;
-
 
   final List<String> categories = [
     "salary",
@@ -60,33 +60,39 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
     _commentController.dispose();
     super.dispose();
   }
+
   TransactionType parseType(String value) {
     return TransactionType.values.firstWhere(
-          (e) => e.toString().split('.').last == value,
+      (e) => e.toString().split('.').last == value,
     );
   }
 
   Category parseCategory(String value) {
     return Category.values.firstWhere(
-          (e) => e.toString().split('.').last == value,
+      (e) => e.toString().split('.').last == value,
     );
   }
 
-
-  void addTransactions(BuildContext context){
-    final title=_commentController.text.trim();
-    final amount =double.tryParse(_amountController.text.trim());
+  void addTransactions(BuildContext context) {
+    final title = _commentController.text.trim();
+    final amount = double.tryParse(_amountController.text.trim());
     final date = _selectedDate;
-    final types =_selectedType;
-    final category =_selectedCategory;
-    if(title.isNotEmpty &&
+    final types = _selectedType;
+    final category = _selectedCategory;
+    if (title.isNotEmpty &&
         amount != null &&
         amount > 0 &&
         date != null &&
         types != null &&
-        category != null){
+        category != null) {
       final counter = context.read<TransactionProvider>();
-      counter.addTransaction(title, amount, date, parseType(types), parseCategory(category));
+      counter.addTransaction(
+        title,
+        amount,
+        date,
+        parseType(types),
+        parseCategory(category),
+      );
       Navigator.of(context).pop();
       _amountController.clear();
       _commentController.clear();
@@ -94,16 +100,13 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(SnackBar(content: Text('$_selectedType Add')));
-
     }
-
-
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("gelir gider ekle")),
+      appBar: AppBar(title: Text("Add income / expense")),
       body: Container(
         padding: EdgeInsets.all(20),
         width: MediaQuery.of(context).size.width,
@@ -115,7 +118,12 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
             SizedBox(height: 20),
             TextField(
               controller: _amountController,
-              keyboardType: const TextInputType.numberWithOptions(decimal: true),
+              keyboardType: const TextInputType.numberWithOptions(
+                decimal: true,
+              ),
+              inputFormatters: [
+                FilteringTextInputFormatter.digitsOnly, // Sadece rakam
+              ],
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: '₺ Amount',
@@ -127,7 +135,7 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: 'Comment',
-              ),
+              ), 
             ),
             SizedBox(height: 16),
             TextField(
@@ -148,8 +156,6 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
             ),
             SizedBox(height: 16),
             DropdownButtonFormField<String>(
-
-              
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: "Type",
@@ -165,7 +171,6 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
             ),
             SizedBox(height: 16),
             DropdownButtonFormField<String>(
-             
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: "Categories",
@@ -187,9 +192,7 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.green,
                   foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 15,
-                  ),
+                  padding: const EdgeInsets.symmetric(vertical: 15),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8), // Köşeleri yuvarla
                   ),

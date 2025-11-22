@@ -29,7 +29,7 @@ class TransactionModel {
       id: json['id'],
       title: json['title'],
       amount: json['amount'].toDouble(),
-      dateTime: DateTime.parse(json['dateTime']),
+      dateTime: DateTime.parse(json['date']),
       type: TransactionType.values.byName(json['type']),
       category: Category.values.byName(json['category']),
     );

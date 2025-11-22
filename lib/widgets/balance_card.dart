@@ -39,7 +39,7 @@ Container balanceCard(double balance, double income, double expense, BuildContex
                     Text("₺ $income",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
                   ],
                 ),
-                SizedBox(width: 100),
+                SizedBox(width: 50),
                 Icon(Icons.arrow_circle_down),
                 SizedBox(width: 5),
                 Column(
