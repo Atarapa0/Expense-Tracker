@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:expense_tracker/models/transaction_model.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -8,8 +9,9 @@ import 'pages/home_page.dart';
 Future<void> main() async {
 WidgetsFlutterBinding.ensureInitialized();
 
-  // 1) Hive'i başlat
-  await Hive.initFlutter();
+  // 1) Hive'i başlat - path_provider kullanmadan
+  final dir = Directory.systemTemp; // sadece öğrenme için, geçici klasör
+  Hive.init(dir.path);
 
   // 2) Adapter'ları kaydet
   Hive.registerAdapter(TransactionModelAdapter());

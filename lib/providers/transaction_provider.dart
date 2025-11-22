@@ -3,8 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
 class TransactionProvider with ChangeNotifier {
- TransactionProvider(this.box);
+TransactionProvider(this.box) {
+    _items.addAll(box.values);
+    _items.sort((a, b) => b.dateTime.compareTo(a.dateTime));
 
+    if (_items.isNotEmpty) {
+      // En büyük id'yi bul, +1'den devam et
+      _idCounter = _items.map((e) => e.id).reduce((a, b) => a > b ? a : b) + 1;
+    }
+  }
   final Box<TransactionModel> box;
   int _idCounter = 1;
   final List<TransactionModel> _items = [];
@@ -55,11 +62,11 @@ class TransactionProvider with ChangeNotifier {
   double get balance => income - expense;
 
 Future<void> loadTransactions() async {
-  final box = Hive.box<TransactionModel>('transactions');
-  _items.clear();
-  _items.addAll(box.values);
+_items
+  ..clear()
+  ..addAll(box.values);
+   
   _items.sort((a, b) => b.dateTime.compareTo(a.dateTime));
-  notifyListeners();
 }
 }
 

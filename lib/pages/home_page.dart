@@ -13,7 +13,7 @@ class HomePage extends StatefulWidget {
 
 
 class _HomePageState extends State<HomePage> {
-  late final Future<void> _initialFuture;
+  late  Future<void> _initialFuture;
   @override
   void initState() {
     super.initState();
