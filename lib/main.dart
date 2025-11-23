@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 import 'providers/transaction_provider.dart';
-import 'pages/home_page.dart';
 
 Future<void> main() async {
 WidgetsFlutterBinding.ensureInitialized();
