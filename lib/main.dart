@@ -1,5 +1,6 @@
 import 'dart:io';
-import 'package:expense_tracker/models/transaction_model.dart';
+import 'package:flow_budget/models/transaction_model.dart';
+import 'package:flow_budget/pages/splash_page.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
@@ -38,7 +39,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomePage(),
+      home: const SplashPage(),
     );
   }
 }

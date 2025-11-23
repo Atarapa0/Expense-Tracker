@@ -56,9 +56,11 @@ class TransactionModel {
 @HiveType(typeId: 1)
 enum TransactionType {
   @HiveField(0)
+  // ignore: constant_identifier_names
   Income,
   
   @HiveField(1)
+  // ignore: constant_identifier_names
   Expense,
 }
 
